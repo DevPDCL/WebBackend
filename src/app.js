@@ -12,7 +12,7 @@ const { errorResponse } = require('./controllers/ResponseController');
 const rateLimiter = rateLimit(
     {
         windowMs: 1*60*1000,
-        limit: 5,
+        limit: 15,
         Message: 'Too many request from this IP, please try again later.'
     }
 )
