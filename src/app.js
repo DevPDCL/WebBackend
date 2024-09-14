@@ -30,6 +30,11 @@ app.use('/api/messages', contactRouter);
 app.use('/api/complaints', complaintRouter);
 app.use('/api/sample-collections', sampleCollectionRouter);
 
+app.use('/api/cicd', (req,res) => {
+    res.status(200).send({
+        Message: "CICD is working fine"
+    })
+} );
 
 app.get("/", rateLimiter, (req, res)=> {
     res.status(200).send({
