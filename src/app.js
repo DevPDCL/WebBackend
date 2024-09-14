@@ -2,6 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 const contactRouter = require('./routers/ContactRouter');
 const complaintRouter = require('./routers/ComplaintSubmissionRouter');
 const sampleCollectionRouter = require('./routers/SampleCollectionRouter');
@@ -24,7 +25,7 @@ app.use(morgan("dev"));
 app.use(rateLimiter);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-
+app.use(cors());
 
 app.use('/api/messages', contactRouter);
 app.use('/api/complaints', complaintRouter);
