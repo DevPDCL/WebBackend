@@ -41,7 +41,7 @@ const complaintSchema = new Schema({
     },
     branch: {
         type: String,
-        trim: true
+        default: "Dhanmondi"
     },
     complain: {
         type: String,
