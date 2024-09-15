@@ -36,7 +36,8 @@ const complaintSchema = new Schema({
         default: Date.now
     },
     time: {
-        type: String
+        type: String,
+        default: Date.now
     },
     branch: {
         type: String,
