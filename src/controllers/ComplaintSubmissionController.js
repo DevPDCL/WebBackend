@@ -18,10 +18,10 @@ const getComplaints = async (req, res, next) => {
 
 const createComplaint = async (req, res, next) => {
   try {
-    const { name, email, phone, complain } = req.body;
+    const { name, email, phone, branch, date, complain } = req.body;
 
     // Create a new ComplaintSubmission document
-    const newComplaint = new ComplaintSubmission({ name, email, phone, complain });
+    const newComplaint = new ComplaintSubmission({ name, email, phone, branch, date, complain });
     await newComplaint.save();
 
     successResponse(res, {
