@@ -41,7 +41,6 @@ const complaintSchema = new Schema({
     },
     branch: {
         type: String,
-        required: [true, 'Branch is required'],
         trim: true
     },
     complain: {
