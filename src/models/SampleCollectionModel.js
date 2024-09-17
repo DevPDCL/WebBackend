@@ -3,7 +3,6 @@ const { Schema, model } = require('mongoose');
 const sampleCollectionSchema = new Schema({
     vendor: {
         type: [String], // Array to store selected vendors (e.g., ['Amar Lab', 'Arogga'])
-        enum: ['Amar Lab', 'Arogga'],
         required: true
     },
     patientName: {
