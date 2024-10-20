@@ -38,7 +38,7 @@ app.use('/api/cicd', (req,res) => {
 
 app.get("/", rateLimiter, (req, res)=> {
     res.status(200).send({
-        Message: "Hello to homepage of our server"
+        Message: "Welcome to Root of our API server"
     })
 });
 
