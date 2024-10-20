@@ -26,7 +26,6 @@ app.use(rateLimiter);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cors());
-
 app.use('/api/messages', contactRouter);
 app.use('/api/complaints', complaintRouter);
 app.use('/api/sample-collections', sampleCollectionRouter);
