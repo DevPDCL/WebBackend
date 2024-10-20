@@ -47,6 +47,12 @@ const updateSampleCollectionStatus = async (req, res, next) => {
     const { id } = req.params;
     const { status } = req.body;
 
+        // Validate the status
+        const validStatuses = ['Submitted', 'Processing', 'On the way', 'Completed'];
+        if (!validStatuses.includes(status)) {
+          return next(createError(400, 'Invalid status value'));
+        }
+
     const updatedSampleCollection = await SampleCollection.findByIdAndUpdate(
       id,
       { status },

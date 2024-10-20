@@ -34,4 +34,35 @@ const createComplaint = async (req, res, next) => {
   }
 };
 
-module.exports = { getComplaints, createComplaint };
+const updateComplaintStatus = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+
+        // Validate the status
+        const validStatuses = ['Submitted', 'Processing', 'Customer Reply', 'Completed'];
+        if (!validStatuses.includes(status)) {
+          return next(createError(400, 'Invalid status value'));
+        }
+
+    const updatedComplaint = await ComplaintSubmission.findByIdAndUpdate(
+      id,
+      { status },
+      { new: true }
+    );
+
+    if (!updatedComplaint) {
+      return next(createError(404, 'Complaint not found'));
+    }
+
+    successResponse(res, {
+      statusCode: 200,
+      message: 'Complaint status updated successfully',
+      payload: { updatedComplaint },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { getComplaints, createComplaint, updateComplaintStatus };

@@ -44,6 +44,11 @@ const complaintSchema = new Schema({
         required: [true, 'Complaint is required'],
         maxlength: [500, "Complaint should be up to 500 characters"]
     },
+    status: {
+        type: [String],
+        enum: ['Submitted', 'Processing', 'Customer Reply', 'Completed'],
+        default: 'Submitted'
+    },
 }, { timestamps: true });
 
 const ComplaintSubmission = model('Complaint', complaintSchema);
