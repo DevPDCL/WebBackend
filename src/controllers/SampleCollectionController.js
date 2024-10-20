@@ -29,6 +29,7 @@ const createSampleCollection = async (req, res, next) => {
       pickupTime,
       branchName,
       email,
+      status: 'Submitted'
     });
     await newSampleCollection.save();
 
@@ -41,5 +42,29 @@ const createSampleCollection = async (req, res, next) => {
     next(error);
   }
 };
+const updateSampleCollectionStatus = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
 
-module.exports = { getSampleCollections, createSampleCollection };
+    const updatedSampleCollection = await SampleCollection.findByIdAndUpdate(
+      id,
+      { status },
+      { new: true }
+    );
+
+    if (!updatedSampleCollection) {
+      return next(createError(404, 'Sample collection not found'));
+    }
+
+    successResponse(res, {
+      statusCode: 200,
+      message: 'Sample collection status updated successfully',
+      payload: { updatedSampleCollection },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { getSampleCollections, createSampleCollection, updateSampleCollectionStatus };

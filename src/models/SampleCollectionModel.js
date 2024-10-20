@@ -38,7 +38,12 @@ const sampleCollectionSchema = new Schema({
             validator: (v) => /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/.test(v),
             message: "Please enter a valid email"
         }
-    }
+    },
+    status: {
+        type: [String],
+        enum: ['Submitted', 'Processing', 'On the way', 'Completed'],
+        default: ["Submitted"]
+    },
 }, { timestamps: true });
 
 const SampleCollection = model('SampleCollection', sampleCollectionSchema);
