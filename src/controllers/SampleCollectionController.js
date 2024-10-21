@@ -6,7 +6,7 @@ const getColorCode = (status) => {
   const colorCodes = {
     Submitted: "#ffffff",
     Processing: "#fef9c3",
-    "Customer Reply": "#dbeafe",
+    "On the way": "#dbeafe",
     Completed: "#dcfce7",
   };
   return colorCodes[status] || "#ffffff"; // Default to white if status is invalid
@@ -28,7 +28,15 @@ const getSampleCollections = async (req, res, next) => {
 
 const createSampleCollection = async (req, res, next) => {
   try {
-    const { vendor, patientName, location, phone, pickupTime, branchName, email } = req.body;
+    const {
+      vendor,
+      patientName,
+      location,
+      phone,
+      pickupTime,
+      branchName,
+      email,
+    } = req.body;
 
     const status = "Submitted";
     const colorCode = getColorCode(status);
@@ -49,7 +57,7 @@ const createSampleCollection = async (req, res, next) => {
 
     successResponse(res, {
       statusCode: 201,
-      message: 'Sample collection saved successfully',
+      message: "Sample collection saved successfully",
       payload: { newSampleCollection },
     });
   } catch (error) {
@@ -61,13 +69,18 @@ const updateSampleCollectionStatus = async (req, res, next) => {
     const { id } = req.params;
     const { status } = req.body;
 
-        // Validate the status
-        const validStatuses = ['Submitted', 'Processing', 'On the way', 'Completed'];
-        if (!validStatuses.includes(status)) {
-          return next(createError(400, 'Invalid status value'));
-        }
+    // Validate the status
+    const validStatuses = [
+      "Submitted",
+      "Processing",
+      "On the way",
+      "Completed",
+    ];
+    if (!validStatuses.includes(status)) {
+      return next(createError(400, "Invalid status value"));
+    }
 
-        const colorCode = getColorCode(status);
+    const colorCode = getColorCode(status);
 
     const updatedSampleCollection = await SampleCollection.findByIdAndUpdate(
       id,
@@ -76,12 +89,12 @@ const updateSampleCollectionStatus = async (req, res, next) => {
     );
 
     if (!updatedSampleCollection) {
-      return next(createError(404, 'Sample collection not found'));
+      return next(createError(404, "Sample collection not found"));
     }
 
     successResponse(res, {
       statusCode: 200,
-      message: 'Sample collection status updated successfully',
+      message: "Sample collection status updated successfully",
       payload: { updatedSampleCollection },
     });
   } catch (error) {
@@ -89,4 +102,8 @@ const updateSampleCollectionStatus = async (req, res, next) => {
   }
 };
 
-module.exports = { getSampleCollections, createSampleCollection, updateSampleCollectionStatus };
+module.exports = {
+  getSampleCollections,
+  createSampleCollection,
+  updateSampleCollectionStatus,
+};
