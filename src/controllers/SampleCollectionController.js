@@ -2,6 +2,16 @@ const createError = require("http-errors");
 const SampleCollection = require("../models/SampleCollectionModel");
 const { successResponse } = require("./ResponseController");
 
+const getColorCode = (status) => {
+  const colorCodes = {
+    Submitted: "#ffffff",
+    Processing: "#fef9c3",
+    "Customer Reply": "#dbeafe",
+    Completed: "#dcfce7",
+  };
+  return colorCodes[status] || "#ffffff"; // Default to white if status is invalid
+};
+
 const getSampleCollections = async (req, res, next) => {
   try {
     const allSampleCollections = await SampleCollection.find();
@@ -20,6 +30,9 @@ const createSampleCollection = async (req, res, next) => {
   try {
     const { vendor, patientName, location, phone, pickupTime, branchName, email } = req.body;
 
+    const status = "Submitted";
+    const colorCode = getColorCode(status);
+
     // Create a new SampleCollection document
     const newSampleCollection = new SampleCollection({
       vendor,
@@ -29,7 +42,8 @@ const createSampleCollection = async (req, res, next) => {
       pickupTime,
       branchName,
       email,
-      status: 'Submitted'
+      status,
+      colorCode,
     });
     await newSampleCollection.save();
 
@@ -53,9 +67,11 @@ const updateSampleCollectionStatus = async (req, res, next) => {
           return next(createError(400, 'Invalid status value'));
         }
 
+        const colorCode = getColorCode(status);
+
     const updatedSampleCollection = await SampleCollection.findByIdAndUpdate(
       id,
-      { status },
+      { status, colorCode },
       { new: true }
     );
 

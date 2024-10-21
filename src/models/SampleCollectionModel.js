@@ -44,6 +44,10 @@ const sampleCollectionSchema = new Schema({
         enum: ['Submitted', 'Processing', 'On the way', 'Completed'],
         default: ["Submitted"]
     },
+    colorCode: {
+        type: String,
+        default: '#ffffff' // Default color for 'Submitted'
+    },
 }, { timestamps: true });
 
 const SampleCollection = model('SampleCollection', sampleCollectionSchema);
