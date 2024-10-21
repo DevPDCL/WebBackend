@@ -49,6 +49,10 @@ const complaintSchema = new Schema({
         enum: ['Submitted', 'Processing', 'Customer Reply', 'Completed'],
         default: 'Submitted'
     },
+    colorCode: {
+        type: String,
+        default: '#ffffff' // Default color for 'Submitted'
+    },
 }, { timestamps: true });
 
 const ComplaintSubmission = model('Complaint', complaintSchema);
