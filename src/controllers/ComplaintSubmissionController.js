@@ -11,7 +11,20 @@ const getColorCode = (status) => {
   };
   return colorCodes[status] || "#ffffff"; // Default to white if status is invalid
 };
-
+const searchUsers = async (req, res) => {
+  const { name } = req.query;  // Get the search query from the URL (e.g., /api/users/search?name=John)
+  
+  try {
+    const users = await ComplaintSubmission.find({
+      name: { $regex: name, $options: 'i' },  // Perform case-insensitive search
+    }).exec();
+    
+    return res.status(200).json(users);  // Send the search results
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: "Server Error" });
+  }
+};
 const getComplaints = async (req, res, next) => {
   try {
     const allComplaints = await ComplaintSubmission.find();
@@ -94,4 +107,4 @@ const updateComplaintStatus = async (req, res, next) => {
   }
 };
 
-module.exports = { getComplaints, createComplaint, updateComplaintStatus };
+module.exports = { getComplaints, createComplaint, updateComplaintStatus, searchUsers };
