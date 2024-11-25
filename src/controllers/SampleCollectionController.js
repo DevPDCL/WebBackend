@@ -11,7 +11,20 @@ const getColorCode = (status) => {
   };
   return colorCodes[status] || "#ffffff"; // Default to white if status is invalid
 };
-
+const searchSample = async (req, res) => {
+  const { patientName } = req.query;  // Get the search query from the URL (e.g., /api/users/search?name=John)
+  
+  try {
+    const users = await SampleCollection.find({
+      patientName: { $regex: patientName, $options: 'i' },  // Perform case-insensitive search
+    }).exec();
+    
+    return res.status(200).json(users);  // Send the search results
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: "Server Error" });
+  }
+};
 const getSampleCollections = async (req, res, next) => {
   try {
     const allSampleCollections = await SampleCollection.find();
@@ -106,4 +119,5 @@ module.exports = {
   getSampleCollections,
   createSampleCollection,
   updateSampleCollectionStatus,
+  searchSample
 };

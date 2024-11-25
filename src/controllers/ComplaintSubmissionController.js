@@ -25,6 +25,10 @@ const searchUsers = async (req, res) => {
     return res.status(500).json({ message: "Server Error" });
   }
 };
+
+
+
+
 const getComplaints = async (req, res, next) => {
   try {
     const allComplaints = await ComplaintSubmission.find();
