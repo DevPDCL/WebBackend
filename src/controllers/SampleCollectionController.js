@@ -13,10 +13,11 @@ const getColorCode = (status) => {
 };
 const searchSample = async (req, res) => {
   const { patientName } = req.query;  // Get the search query from the URL (e.g., /api/users/search?name=John)
-  
+  const { vendor } = req.query;
   try {
     const users = await SampleCollection.find({
       patientName: { $regex: patientName, $options: 'i' },  // Perform case-insensitive search
+      vendor: { $regex: vendor, $options: 'i' },
     }).exec();
     
     return res.status(200).json(users);  // Send the search results
