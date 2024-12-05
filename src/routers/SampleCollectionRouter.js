@@ -6,4 +6,5 @@ sampleCollectionRouter.get("/", getSampleCollections);
 sampleCollectionRouter.post("/", createSampleCollection);
 sampleCollectionRouter.patch("/:id/status", updateSampleCollectionStatus);
 sampleCollectionRouter.get('/search', searchSample);
+
 module.exports = sampleCollectionRouter;
