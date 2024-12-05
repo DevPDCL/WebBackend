@@ -6,5 +6,4 @@ complaintRouter.get("/", getComplaints);
 complaintRouter.post("/", createComplaint);
 complaintRouter.patch("/:id/status", updateComplaintStatus);
 complaintRouter.get('/search', searchUsers);
-z
 module.exports = complaintRouter;
